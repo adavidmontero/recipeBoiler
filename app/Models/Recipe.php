@@ -68,9 +68,9 @@ class Recipe extends Model
         $recipe = new Recipe;
         $recipe->title = $request->title;
         $recipe->excerpt = $request->excerpt;
-        $recipe->description = $request->description;
-        $recipe->ingredients = $data[0];
-        $recipe->preparation = $data[1];
+        $recipe->description = $data[0];
+        $recipe->ingredients = $data[1];
+        $recipe->preparation = $data[2];
         $recipe->image = 'storage/' . $ruta_imagen;
         $recipe->category_id = $request->category;
         $recipe->user_id = auth()->user()->id;
@@ -88,11 +88,10 @@ class Recipe extends Model
         $this->update([
             'title' => $request->title,
             'excerpt' => $request->excerpt,
-            'description' => $request->description,
-            'ingredients' => $data[0],
-            'preparation' => $data[1],
+            'description' => $data[0],
+            'ingredients' => $data[1],
+            'preparation' => $data[2],
             'category_id' => $request->category,
-            'user_id' => auth()->user()->id,
             'published_at' => $request->published_at
                 ? $request->published_at = Carbon::parse($request->published_at)->format('Y-m-d H:i:s')
                 : null
@@ -118,9 +117,9 @@ class Recipe extends Model
         $this->tags()->sync($tagsIds);
     }
 
-    public function saveImagesFromRecipes($ingredients, $preparation)
+    public function saveImagesFromRecipes($description, $ingredients, $preparation)
     {
-        $arrayFields = [$ingredients, $preparation];
+        $arrayFields = [$description, $ingredients, $preparation];
         //Este array contendrá los campos reconvertidos al final
         $newArr = [];
 
@@ -175,7 +174,7 @@ class Recipe extends Model
 
     public function deleteImages($action = '', $request)
     {
-        $arrayFields = [$this->ingredients, $this->preparation];
+        $arrayFields = [$this->description, $this->ingredients, $this->preparation];
 
         foreach ($arrayFields as $item) {
             $dom = new \DomDocument();
@@ -194,6 +193,8 @@ class Recipe extends Model
                     Storage::delete($urlImage);   
                 } else if ($action === 'update') {
                     if (
+                        !Str::of($request->description)->contains($src)
+                        AND
                         !Str::of($request->preparation)->contains($src)
                         AND
                         !Str::of($request->ingredients)->contains($src)

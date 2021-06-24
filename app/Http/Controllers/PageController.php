@@ -19,7 +19,7 @@ class PageController extends Controller
         $recents = Recipe::published()->latest('published_at')->take(3)->get();
 
         $recipesByCat = Category::byCategory();
-
+        
         $categories = Category::pluck('name', 'id')->all();
 
         //dd($categories);
@@ -62,8 +62,10 @@ class PageController extends Controller
     public function showCategory(Category $category)
     {
         $recipes = $category->recipes()->published()->simplePaginate(9);
+        $categories = Category::pluck('name', 'id')->all();
         $category = $category->name;
-        return view('pages.show-category', compact('recipes', 'category'));
+        
+        return view('pages.show-category', compact('recipes', 'category', 'categories'));
     }
 
     public function search(Request $request)

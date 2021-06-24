@@ -159,25 +159,48 @@
                         [ 'color', [ 'color' ] ],
                         [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
                         [ 'table', [ 'table' ] ],
-                        [ 'insert', [ 'link'] ],
+                        [ 'insert', [ 'link', 'picture'] ],
                         [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
                     ]
                 });
                 $('#ingredients').summernote({
                     height: 300,
+                    toolbar: [
+                        [ 'style', [ 'style' ] ],
+                        [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+                        [ 'fontname', [ 'fontname' ] ],
+                        [ 'fontsize', [ 'fontsize' ] ],
+                        [ 'color', [ 'color' ] ],
+                        [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+                        [ 'table', [ 'table' ] ],
+                        [ 'insert', [ 'link', 'picture'] ],
+                        [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+                    ]
                 });
                 $('#preparation').summernote({
                     height: 300,
+                    toolbar: [
+                        [ 'style', [ 'style' ] ],
+                        [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+                        [ 'fontname', [ 'fontname' ] ],
+                        [ 'fontsize', [ 'fontsize' ] ],
+                        [ 'color', [ 'color' ] ],
+                        [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+                        [ 'table', [ 'table' ] ],
+                        [ 'insert', [ 'link', 'picture'] ],
+                        [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+                    ]
                 });
 
                 //Initialize Select2 Elements
                 $('.select2').select2({
                     tags: true,
+                    maximumSelectionLength: 3
                 });
 
                 //Initialize Select2 Elements
                 $('.select2bs4').select2({
-                    theme: 'bootstrap4'
+                    theme: 'bootstrap4',
                 });
             });
         </script>

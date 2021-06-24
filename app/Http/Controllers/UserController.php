@@ -65,7 +65,7 @@ class UserController extends Controller
         $user->update([
             'name' => $request->validated()['name'],
             'email' => $request->validated()['email'],
-            'password' => bcrypt($request->validated()['password']),
+            /* 'password' => bcrypt($request->validated()['password']), */
         ]);
         $user->roles()->sync($request->input('roles', []));
 

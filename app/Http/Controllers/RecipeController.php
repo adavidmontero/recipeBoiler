@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\Models\Tag;
 use App\Models\Recipe;
 use App\Models\Category;
@@ -78,7 +77,7 @@ class RecipeController extends Controller
         }
 
         //Guardamos las imagenes que vengan en los campos ingredients y preparation
-        $data = $recipe->saveImagesFromRecipes($request->ingredients, $request->preparation);
+        $data = $recipe->saveImagesFromRecipes($request->description, $request->ingredients, $request->preparation);
 
         //Guardamos la receta, enviamos el request y el contenido de ingredients y preparation
         $recipe->saveRecipe($request, $data, $ruta_imagen);
@@ -94,7 +93,15 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        //
+        $categories = Category::with(['recipes' => function ($recipes) {
+            $recipes->published();
+        }])->get()->filter(function ($item) {
+            return $item->recipes->count() > 0;
+        })->sortByDesc(function ($item) {
+            return $item->recipes->count();
+        })->take(5);
+
+        return view('recipes.show', compact('recipe', 'categories'));
     }
 
     /**
@@ -146,7 +153,7 @@ class RecipeController extends Controller
 
         $recipe->deleteImages('update', $request);
 
-        $data = $recipe->saveImagesFromRecipes($request->ingredients, $request->preparation);
+        $data = $recipe->saveImagesFromRecipes($request->description, $request->ingredients, $request->preparation);
 
         $recipe->updateRecipe($request, $data, $ruta_imagen);
 
