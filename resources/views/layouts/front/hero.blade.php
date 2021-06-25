@@ -5,7 +5,7 @@
                 <img src="{{ asset('./images/hamburger.jpg') }}" class="d-block img-fluid rounded" alt="Bootstrap Themes" loading="lazy">
             </div>
             <div class="col-lg-6">
-                <h1 class="display-5 fw-bold lh-1 mb-3 text-center">Encuentra tu comida favorita</h1>
+                <h1 class="display-5 fw-bold lh-1 mb-3 text-center">Encuentra tu receta favorita</h1>
                 <p class="lead text-justify">
                     En Recipe Boiler contamos con una gran variedad de recetas para todos los 
                     gustos, a las que podrás acceder de manera fácil, rápida y clara. 

@@ -1,9 +1,9 @@
 @extends('layouts.front.app')
 
 @section('content')
-    <div class="container py-4">
+    <div class="container py-5">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 m-auto">
                 <h1 class="text-green">{{ $recipe->title }}</h1>
                 <p class="lead text-justify">
                     {{ $recipe->excerpt }}
@@ -58,19 +58,20 @@
                 <p class="lead">
                     {!! $recipe->description !!}
                 </p>
-                
+
                 <hr>
 
-                <div>
-                    <div class="float-lg-left w-lg-50 bg-white p-4 mr-lg-5 rounded-lg shadow-sm">
-                        <h4 class="text-green">Ingredientes</h4>
-                        <hr>
-                        <p>
-                            {!! $recipe->ingredients !!}
-                        </p>
-                    </div>
+                <div class="container-md bg-white p-4 rounded-lg shadow-sm">
 
-                    <div class="pt-4">
+                    <h4 class="text-green">Ingredientes</h4>
+
+                    <p>
+                        {!! $recipe->ingredients !!}
+                    </p>
+
+                    <hr>
+
+                    <div>
                         <h4 class="text-green">Preparación</h4>
                         <p>
                             {!! $recipe->preparation !!}
@@ -101,10 +102,10 @@
                 <div class="bg-white text-green p-4 rounded-lg shadow-sm">
                     <h4>Categorías</h4>
                     <hr>
-                    @foreach ($categories as $category)
+                    @foreach ($categories as $c)
                         <p>
-                            <a href="{{ route('page.showCategory', $category) }}" class="text-dark text-decoration-none">
-                                {{ $category->name }} ({{ $category->recipes->count() }})
+                            <a href="{{ route('page.showCategory', $c) }}" class="text-dark text-decoration-none">
+                                {{ $c->name }} ({{ $c->recipes->count() }})
                             </a>
                         </p>
                     @endforeach

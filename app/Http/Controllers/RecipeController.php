@@ -77,7 +77,7 @@ class RecipeController extends Controller
         }
 
         //Guardamos las imagenes que vengan en los campos ingredients y preparation
-        $data = $recipe->saveImagesFromRecipes($request->description, $request->ingredients, $request->preparation);
+        $data = $recipe->saveImagesFromRecipes($request->description, $request->preparation);
 
         //Guardamos la receta, enviamos el request y el contenido de ingredients y preparation
         $recipe->saveRecipe($request, $data, $ruta_imagen);
@@ -153,7 +153,7 @@ class RecipeController extends Controller
 
         $recipe->deleteImages('update', $request);
 
-        $data = $recipe->saveImagesFromRecipes($request->description, $request->ingredients, $request->preparation);
+        $data = $recipe->saveImagesFromRecipes($request->description, $request->preparation);
 
         $recipe->updateRecipe($request, $data, $ruta_imagen);
 

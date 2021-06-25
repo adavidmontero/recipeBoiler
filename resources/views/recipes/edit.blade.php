@@ -179,7 +179,7 @@
                         [ 'color', [ 'color' ] ],
                         [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
                         [ 'table', [ 'table' ] ],
-                        [ 'insert', [ 'link', 'picture'] ],
+                        [ 'insert', [ 'link' ] ],
                         [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
                     ]
                 });

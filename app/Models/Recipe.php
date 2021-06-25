@@ -69,8 +69,8 @@ class Recipe extends Model
         $recipe->title = $request->title;
         $recipe->excerpt = $request->excerpt;
         $recipe->description = $data[0];
-        $recipe->ingredients = $data[1];
-        $recipe->preparation = $data[2];
+        $recipe->ingredients = $request->ingredients;
+        $recipe->preparation = $data[1];
         $recipe->image = 'storage/' . $ruta_imagen;
         $recipe->category_id = $request->category;
         $recipe->user_id = auth()->user()->id;
@@ -89,8 +89,8 @@ class Recipe extends Model
             'title' => $request->title,
             'excerpt' => $request->excerpt,
             'description' => $data[0],
-            'ingredients' => $data[1],
-            'preparation' => $data[2],
+            'ingredients' => $request->ingredients,
+            'preparation' => $data[1],
             'category_id' => $request->category,
             'published_at' => $request->published_at
                 ? $request->published_at = Carbon::parse($request->published_at)->format('Y-m-d H:i:s')
@@ -117,9 +117,9 @@ class Recipe extends Model
         $this->tags()->sync($tagsIds);
     }
 
-    public function saveImagesFromRecipes($description, $ingredients, $preparation)
+    public function saveImagesFromRecipes($description, $preparation)
     {
-        $arrayFields = [$description, $ingredients, $preparation];
+        $arrayFields = [$description, $preparation];
         //Este array contendrá los campos reconvertidos al final
         $newArr = [];
 
@@ -161,6 +161,7 @@ class Recipe extends Model
                     $new_src = asset($filepath);
                     $img->removeAttribute('src');
                     $img->setAttribute('src', $new_src);
+                    $img->setAttribute("class", "img-fluid rounded");
                 } // <!--endif
             } // <!--endforeach
 
@@ -174,7 +175,7 @@ class Recipe extends Model
 
     public function deleteImages($action = '', $request)
     {
-        $arrayFields = [$this->description, $this->ingredients, $this->preparation];
+        $arrayFields = [$this->description, $this->preparation];
 
         foreach ($arrayFields as $item) {
             $dom = new \DomDocument();
@@ -196,8 +197,6 @@ class Recipe extends Model
                         !Str::of($request->description)->contains($src)
                         AND
                         !Str::of($request->preparation)->contains($src)
-                        AND
-                        !Str::of($request->ingredients)->contains($src)
                     ) 
                     {
                         //Modificamos el string para obtener la url de la imagen

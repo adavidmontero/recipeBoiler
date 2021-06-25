@@ -62,7 +62,13 @@ class PageController extends Controller
     public function showCategory(Category $category)
     {
         $recipes = $category->recipes()->published()->simplePaginate(9);
-        $categories = Category::pluck('name', 'id')->all();
+        $categories = Category::with(['recipes' => function ($recipes) {
+            $recipes->published();
+        }])->get()->filter(function ($item) {
+            return $item->recipes->count() > 0;
+        })->sortByDesc(function ($item) {
+            return $item->recipes->count();
+        })->take(5);
         $category = $category->name;
         
         return view('pages.show-category', compact('recipes', 'category', 'categories'));
@@ -77,14 +83,22 @@ class PageController extends Controller
         if ($request->category) {
             $results = Recipe::published()
                         ->where('category_id', $request->category)
-                        ->where('title', 'like', '%' . $request->title . '%')->paginate(3);
+                        ->where('title', 'like', '%' . $request->title . '%')->simplePaginate(3);
         } else {
             $results = Recipe::published()
-                            ->where('title', 'like', '%' . $request->title . '%')->paginate(3);
+                            ->where('title', 'like', '%' . $request->title . '%')->simplePaginate(3);
         }
 
-        $categories = Category::pluck('name', 'id')->all();
+        $categories = Category::with(['recipes' => function ($recipes) {
+            $recipes->published();
+        }])->get()->filter(function ($item) {
+            return $item->recipes->count() > 0;
+        })->sortByDesc(function ($item) {
+            return $item->recipes->count();
+        })->take(5);
 
-        return view('pages.search', compact('results', 'categories'));
+        $title = $request->title;
+
+        return view('pages.search', compact('results', 'categories', 'title'));
     }
 }
