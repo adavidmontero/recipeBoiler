@@ -61,6 +61,11 @@
 
                 <hr>
 
+                <img src="{{ asset($recipe->image) }}" alt="{{ $recipe->title }}'s image"
+                        class="img-fluid d-block mx-auto rounded-lg" />
+
+                <hr>
+
                 <div class="container-md bg-white p-4 rounded-lg shadow-sm">
 
                     <h4 class="text-green">Ingredientes</h4>
@@ -78,13 +83,16 @@
                         </p>
                     </div>
                 </div>
+
+                <hr>
+                    
+                <div class="d-flex justify-content-center text-center">
+                    <livewire:like :recipe="$recipe->id" />
+                </div>
             </div>	
             
             <div class="col-lg-4">
                 <hr class="d-block d-lg-none">
-
-                <img src="{{ asset($recipe->image) }}" alt="{{ $recipe->title }}'s image"
-                    class="img-fluid d-block mx-auto mb-4 rounded-lg" />
 
                 <div class="bg-white p-4 rounded-lg shadow-sm mb-4">
                     <form action="{{ route('page.search') }}">

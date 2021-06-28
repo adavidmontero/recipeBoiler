@@ -50,6 +50,11 @@ class Recipe extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'likes_recipe');
+    }
+
     //QUERY SCOPES
     public function scopePublished($query)
     {

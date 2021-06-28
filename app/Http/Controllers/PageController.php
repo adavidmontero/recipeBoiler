@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Recipe;
 use App\Models\Category;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -18,13 +18,15 @@ class PageController extends Controller
     {
         $recents = Recipe::published()->latest('published_at')->take(3)->get();
 
+        $populars = Recipe::withCount('likes')->get()->sortByDesc('likes_count')->take(3);
+
         $recipesByCat = Category::byCategory();
         
         $categories = Category::pluck('name', 'id')->all();
 
         //dd($categories);
 
-        return view('pages.index', compact('recents', 'recipesByCat', 'categories'));
+        return view('pages.index', compact('recents', 'recipesByCat', 'populars', 'categories'));
     }
 
     /**
@@ -61,7 +63,7 @@ class PageController extends Controller
 
     public function showCategory(Category $category)
     {
-        $recipes = $category->recipes()->published()->simplePaginate(9);
+        $recipes = $category->recipes()->published()->simplePaginate(10);
         $categories = Category::with(['recipes' => function ($recipes) {
             $recipes->published();
         }])->get()->filter(function ($item) {
@@ -72,6 +74,20 @@ class PageController extends Controller
         $category = $category->name;
         
         return view('pages.show-category', compact('recipes', 'category', 'categories'));
+    }
+
+    public function showFavorites(User $user)
+    {
+        $recipes = $user->myLikes()->simplePaginate(10);
+        $categories = Category::with(['recipes' => function ($recipes) {
+            $recipes->published();
+        }])->get()->filter(function ($item) {
+            return $item->recipes->count() > 0;
+        })->sortByDesc(function ($item) {
+            return $item->recipes->count();
+        })->take(5);
+
+        return view('pages.show-favorites', compact('recipes', 'categories'));
     }
 
     public function search(Request $request)

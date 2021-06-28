@@ -79,6 +79,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function myLikes()
+    {
+        return $this->belongsToMany(Recipe::class, 'likes_recipe');
+    }
+
     public function hasRole(...$roles)
     {
         foreach ($roles as $role) {

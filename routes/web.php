@@ -38,5 +38,7 @@ Route::get('/', 'PageController@index');
 Route::get('/search', 'PageController@search')->name('page.search');
 //Vista de recetas por categoría
 Route::get('/{category}', 'PageController@showCategory')->name('page.showCategory');
+//Vista de recetas likeadas
+Route::get('/{user}/favorites', 'PageController@showFavorites')->name('page.showFavorites');
 //Vista individual
 Route::get('/recipes/{recipe}', 'RecipeController@show')->name('recipes.show');
