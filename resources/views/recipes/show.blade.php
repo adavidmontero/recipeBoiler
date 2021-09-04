@@ -5,54 +5,42 @@
         <div class="row">
             <div class="col-lg-8 m-auto">
                 <h1 class="text-green">{{ $recipe->title }}</h1>
+
+                <hr>
+
                 <p class="lead text-justify">
                     {{ $recipe->excerpt }}
                 </p>
-                
+
                 <hr>
 
-                {{-- <p>
-                    <i class="fa fa-calendar-alt"></i>
-                    <span class="font-weight-bold">Publicado el:</span> 
-                        {{ $recipe->published_at->formatLocalized('%d de %B %Y a las %H:%m %p') }}
-                    |
-                    <i class="fa fa-user-alt"></i>
-                    <span class="font-weight-bold">Por:</span> 
-                    {{ $recipe->user->name }}
-                    |
-                    <i class="fa fa-list-alt"></i>
-                    <span class="font-weight-bold">Categoría:</span> 
-                    {{ $recipe->category->name }}
-                </p> --}}
-
-                <div class="d-flex justify-content-between flex-wrap">
-                    <p>
+                <div class="d-flex flex-wrap">
+                    <p class="mr-4">
                         <i class="fa fa-calendar-alt"></i>
-                        <span class="font-weight-bold">Publicado el:</span> 
-                        {{ $recipe->published_at->formatLocalized('%d de %B %Y a las %H:%m %p') }}
+                        <span class="font-weight-bold">Publicado el:</span>
+                        {{ $recipe->published_at->formatLocalized('%d de %B del %Y %H:%M') }}
                     </p>
-                    <p>
+                    <p class="mr-4">
                         <i class="fa fa-user-alt"></i>
-                        <span class="font-weight-bold">Por:</span> 
+                        <span class="font-weight-bold">Autor:</span>
                         {{ $recipe->user->name }}
                     </p>
-                    <p>
+                    <p class="mr-4">
                         <i class="fa fa-list-alt"></i>
-                        <span class="font-weight-bold">Categoría:</span> 
+                        <span class="font-weight-bold">Categoría:</span>
                         {{ $recipe->category->name }}
+                    </p>
+                    <p>
+                        <i class="fa fa-tag"></i>
+                        <span class="font-weight-bold">Etiquetas:</span>
+                        @foreach ($recipe->tags as $tag)
+                            <span class="badge bg-green text-white font-weight-normal px-2 py-1">
+                                #{{ $tag->name }}
+                            </span>
+                        @endforeach
                     </p>
                 </div>
 
-                <p>
-                    <i class="fa fa-tag"></i>
-                    <span class="font-weight-bold">Etiquetas:</span>
-                    @foreach ($recipe->tags as $tag)
-                        <span class="badge bg-green text-white font-weight-normal px-2 py-1">
-                            #{{ $tag->name }}
-                        </span>
-                    @endforeach
-                </p>
-					
                 <hr>
 
                 <p class="lead">
@@ -66,31 +54,32 @@
 
                 <hr>
 
-                <div class="container-md bg-white p-4 rounded-lg shadow-sm">
+                <div class="bg-white p-4 rounded-lg shadow-sm">
 
                     <h4 class="text-green">Ingredientes</h4>
-
+                    <hr>
                     <p>
                         {!! $recipe->ingredients !!}
                     </p>
-
-                    <hr>
-
-                    <div>
-                        <h4 class="text-green">Preparación</h4>
-                        <p>
-                            {!! $recipe->preparation !!}
-                        </p>
-                    </div>
                 </div>
 
                 <hr>
-                    
+
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="text-green">Preparación</h4>
+                    <hr>
+                    <p>
+                        {!! $recipe->preparation !!}
+                    </p>
+                </div>
+
+                <hr>
+
                 <div class="d-flex justify-content-center text-center">
                     <livewire:like :recipe="$recipe->id" />
                 </div>
-            </div>	
-            
+            </div>
+
             <div class="col-lg-4">
                 <hr class="d-block d-lg-none">
 

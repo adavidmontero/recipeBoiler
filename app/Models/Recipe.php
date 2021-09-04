@@ -79,8 +79,8 @@ class Recipe extends Model
         $recipe->image = 'storage/' . $ruta_imagen;
         $recipe->category_id = $request->category;
         $recipe->user_id = auth()->user()->id;
-        $request->published_at 
-            ? $recipe->published_at = Carbon::parse($request->published_at)->format('Y-m-d H:i:s') 
+        $request->published_at
+            ? $recipe->published_at = Carbon::parse($request->published_at)->format('Y-m-d H:i:s')
             : '';
         $recipe->save();
 
@@ -178,7 +178,7 @@ class Recipe extends Model
         return $newArr;
     }
 
-    public function deleteImages($action = '', $request)
+    public function deleteImages($action, $request)
     {
         $arrayFields = [$this->description, $this->preparation];
 
@@ -196,20 +196,20 @@ class Recipe extends Model
                     //Modificamos el string para obtener la url de la imagen
                     $urlImage = 'public' . Str::of($src)->after('storage');
                     //Borramos la imagen
-                    Storage::delete($urlImage);   
+                    Storage::delete($urlImage);
                 } else if ($action === 'update') {
                     if (
                         !Str::of($request->description)->contains($src)
                         AND
                         !Str::of($request->preparation)->contains($src)
-                    ) 
+                    )
                     {
                         //Modificamos el string para obtener la url de la imagen
                         $urlImage = 'public' . Str::of($src)->after('storage');
                         //Borramos la imagen
-                        Storage::delete($urlImage);   
+                        Storage::delete($urlImage);
                     }
-                }       
+                }
             }
 
             $item = $dom->saveHTML();

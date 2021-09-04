@@ -71,7 +71,7 @@ class RecipeController extends Controller
             //Obtenemos la ruta de la imagen
             $ruta_imagen = $request->file('image')->store('upload-recipes', 'public');
             //Recortamos la imagen para que se ajuste a lo requerido
-            $img = Image::make(public_path("storage/{$ruta_imagen}"))->fit(400, 300);
+            $img = Image::make(storage_path().'/app/public/'.$ruta_imagen)->fit(400, 300);
             //Guardamos la imagen en el directorio
             $img->save();
         }
@@ -170,7 +170,7 @@ class RecipeController extends Controller
     {
         abort_if(Gate::denies('recipe_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        Storage::delete('public' . Str::of($recipe->image)->after('storage'));   
+        Storage::delete('public' . Str::of($recipe->image)->after('storage'));
 
         $recipe->deleteImages('delete', null);
 
