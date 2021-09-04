@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+});
+
 //Vista principal
 Route::get('/', 'PageController@index');
 //Resultados de búsqueda
@@ -42,3 +47,4 @@ Route::get('/{category}', 'PageController@showCategory')->name('page.showCategor
 Route::get('/{user}/favorites', 'PageController@showFavorites')->name('page.showFavorites');
 //Vista individual
 Route::get('/recipes/{recipe}', 'RecipeController@show')->name('recipes.show');
+
