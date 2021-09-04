@@ -115,8 +115,13 @@ class Recipe extends Model
     {
         //Crea una colección con el arreglo y comienza un map
         $tagsIds = collect($tags)->map(function ($tag) {
-            //Si la etiqueta no existe la crea
-            return Tag::find($tag) ? $tag : Tag::create(['name' => $tag])->id;
+
+            if(is_numeric($tag)) {
+                //Si la etiqueta no existe la crea
+                return Tag::find($tag) ? $tag : Tag::create(['name' => $tag])->id;
+            } else {
+                return !Tag::where('name', $tag)->get() ? Tag::where('name', $tag)->get('id') : Tag::create(['name' => $tag])->id;
+            }
         });
 
         $this->tags()->sync($tagsIds);
