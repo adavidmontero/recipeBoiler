@@ -21,7 +21,7 @@ class PageController extends Controller
         $populars = Recipe::withCount('likes')->get()->sortByDesc('likes_count')->take(3);
 
         $recipesByCat = Category::byCategory();
-
+        
         $categories = Category::pluck('name', 'id')->all();
 
         //dd($categories);
@@ -72,7 +72,7 @@ class PageController extends Controller
             return $item->recipes->count();
         })->take(5);
         $category = $category->name;
-
+        
         return view('pages.show-category', compact('recipes', 'category', 'categories'));
     }
 
@@ -99,10 +99,10 @@ class PageController extends Controller
         if ($request->category) {
             $results = Recipe::published()
                         ->where('category_id', $request->category)
-                        ->where('title', 'like', '%' . strtolower($request->title) . '%')->simplePaginate(3);
+                        ->where('title', 'like', '%' . $request->title . '%')->simplePaginate(3);
         } else {
             $results = Recipe::published()
-                            ->where('title', 'like', '%' . strtolower($request->title) . '%')->simplePaginate(3);
+                            ->where('title', 'like', '%' . $request->title . '%')->simplePaginate(3);
         }
 
         $categories = Category::with(['recipes' => function ($recipes) {
