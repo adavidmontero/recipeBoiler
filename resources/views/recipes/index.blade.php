@@ -41,8 +41,8 @@
                                         <a href="{{ route('recipes.show', $recipe) }}" class="mr-2 btn btn-sm btn-primary">View</a>
                                         <a href="{{ route('recipes.edit', $recipe) }}" class="mr-2 btn btn-sm btn-warning">Edit</a>
                                         <form class="d-inline-block" action="{{ route('recipes.destroy', $recipe) }}" method="POST" onsubmit="return confirm('Are you sure?');">
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            @method('DELETE')
+                                            @csrf
                                             <input type="submit" class="btn btn-sm btn-danger" value="Delete">
                                         </form>
                                     </div>
