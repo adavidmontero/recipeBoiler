@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
+Artisan::call('storage:link');
+
 Route::middleware(['auth'])->group(function () {
     //Categorias
     Route::resource('categories', 'CategoryController');
@@ -32,10 +34,6 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
-
-Route::get('/linkstorage', function () {
-    Artisan::call('storage:link');
-});
 
 //Vista principal
 Route::get('/', 'PageController@index');
